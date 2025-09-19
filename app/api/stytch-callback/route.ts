@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const token = searchParams.get('token');
     const tokenType = searchParams.get('stytch_token_type');
-    const telemetryId = searchParams.get('telemetry_id');
+    // const telemetryId = searchParams.get('telemetry_id');
 
     if (!token) {
       await clearSessionCookies();
@@ -24,24 +24,24 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    if (!telemetryId) {
-      await clearSessionCookies();
-      return NextResponse.redirect(
-        new URL('/login?error=missing_telemetry', request.url)
-      );
-    }
+    // if (!telemetryId) {
+    //   await clearSessionCookies();
+    //   return NextResponse.redirect(
+    //     new URL('/login?error=missing_telemetry', request.url)
+    //   );
+    // }
 
-    // Perform fraud fingerprint lookup first
-    const fraudLookup = await stytchClient.fraud.fingerprint.lookup({
-      telemetry_id: telemetryId,
-    });
+    // // Perform fraud fingerprint lookup first
+    // const fraudLookup = await stytchClient.fraud.fingerprint.lookup({
+    //   telemetry_id: telemetryId,
+    // });
 
-    if (fraudLookup.verdict.action !== 'ALLOW') {
-      await clearSessionCookies();
-      return NextResponse.redirect(
-        new URL('/login?error=fraud_check_failed', request.url)
-      );
-    }
+    // if (fraudLookup.verdict.action !== 'ALLOW') {
+    //   await clearSessionCookies();
+    //   return NextResponse.redirect(
+    //     new URL('/login?error=fraud_check_failed', request.url)
+    //   );
+    // }
 
     let user: User;
     let session: Session;
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
         session_token: request.cookies.get('stytch_session')?.value,
         session_duration_minutes: 120,
         session_custom_claims: {
-          device_fingerprint: fraudLookup.fingerprints.visitor_fingerprint,
+          // device_fingerprint: fraudLookup.fingerprints.visitor_fingerprint,
         },
       });
       user = authResponse.user;
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
         session_duration_minutes: 120,
         code_verifier: codeVerifier,
         session_custom_claims: {
-          device_fingerprint: fraudLookup.fingerprints.visitor_fingerprint,
+          // device_fingerprint: fraudLookup.fingerprints.visitor_fingerprint,
         },
       });
       user = authResponse.user;

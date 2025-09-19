@@ -31,12 +31,12 @@ In your Stytch dashboard, configure the following redirect URLs:
 
 ### OAuth Redirect URLs
 
-- **Login Redirect URL**: `http://localhost:3000/fraud/fingerprint`
-- **Signup Redirect URL**: `http://localhost:3000/fraud/fingerprint`
+- **Login Redirect URL**: `http://localhost:3000/api/stytch-callback`
+- **Signup Redirect URL**: `http://localhost:3000/api/stytch-callback`
 
 ### Additional Configuration
 
-- Enable **Google OAuth** in your Stytch OAuth settings
+- Enable ****Google** OAuth** in your Stytch OAuth settings
 - Configure **Fraud & Risk** settings to enable device fingerprinting
 - Set up **Email Templates** for magic links and order confirmations. The expected template_id is `confirm_ai`
 
