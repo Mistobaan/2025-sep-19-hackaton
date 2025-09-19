@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
   // Get the current domain for redirect URL
   const domain = request.nextUrl.origin;
-  const redirectUrl = `${domain}/stytch-callback`;
+  const redirectUrl = `${domain}/api/stytch-callback`;
 
   // Determine Stytch base URL based on environment
   const isLocalhost =

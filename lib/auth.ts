@@ -94,6 +94,12 @@ export async function requireAdaptiveMFA(): Promise<AuthResult> {
     return { session, user };
   }
 
-  const hasPhoneNumber = user.phone_numbers.length > 0;
-  redirect(hasPhoneNumber ? '/2fa' : '/enroll');
+  // const hasPhoneNumber = user.phone_numbers.length > 0;
+  // if (hasPhoneNumber) {
+  //   redirect('/2fa');
+  // } else if (process.env.SKIP_SMS_ENROLLMENT !== 'true') {
+  //   redirect('/enroll');
+  // }
+  // If SKIP_SMS_ENROLLMENT is true and no phone number, continue without redirect
+  return { session, user };
 }
