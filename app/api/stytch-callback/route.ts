@@ -78,28 +78,28 @@ export async function GET(request: NextRequest) {
     await setSessionCookie(session_token);
 
     // Direct to 2FA enrollment if the user does not have a phone number set
-    const hasPhoneNumber = user.phone_numbers.length > 0;
-    if (!hasPhoneNumber) {
-      return NextResponse.redirect(new URL('/enroll', request.url));
-    }
+    // const hasPhoneNumber = user.phone_numbers.length > 0;
+    // if (!hasPhoneNumber) {
+    //   return NextResponse.redirect(new URL('/enroll', request.url));
+    // }
 
-    // Otherwise, only direct to 2FA if the user's device isn't trusted
-    if (!isKnownDevice(session, user)) {
-      return NextResponse.redirect(new URL('/2fa', request.url));
-    }
+    // // Otherwise, only direct to 2FA if the user's device isn't trusted
+    // if (!isKnownDevice(session, user)) {
+    //   return NextResponse.redirect(new URL('/2fa', request.url));
+    // }
 
-    // If this is an order confirmation flow, direct into that
-    const orderId = searchParams.get('order_id');
-    const action = searchParams.get('action');
-    if (orderId && action) {
-      // Redirect to order confirmation page
-      return NextResponse.redirect(
-        new URL(
-          `/confirm-order?order_id=${orderId}&action=${action}`,
-          request.url
-        )
-      );
-    }
+    // // If this is an order confirmation flow, direct into that
+    // const orderId = searchParams.get('order_id');
+    // const action = searchParams.get('action');
+    // if (orderId && action) {
+    //   // Redirect to order confirmation page
+    //   return NextResponse.redirect(
+    //     new URL(
+    //       `/confirm-order?order_id=${orderId}&action=${action}`,
+    //       request.url
+    //     )
+    //   );
+    // }
 
     // Finally, direct to the cart if we don't have a better place to be
     return loginComplete();
